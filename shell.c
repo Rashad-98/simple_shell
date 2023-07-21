@@ -1,8 +1,4 @@
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "main.h"
 
 /**
  * main - UNIX command line interpreter
@@ -19,7 +15,7 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
 	ssize_t count;
 	pid_t pid;
 	int wstatus;
-	char *argv[2];
+	char **argv;
 
 	while (1)
 	{
@@ -36,17 +32,18 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
 			return (0);
 		}
 		buff[count - 1] = '\0';
+		argv = get_argv(buff, count);
 		pid = fork();
 		if (pid == 0)
 		{
-			argv[0] = buff;
-			argv[1] = NULL;
-			execve((const char *)buff, (char *const *)argv, (char *const *)env);
+			execve((const char *)argv[0], (char *const *)argv, (char *const *)env);
 			perror(av[0]);
 			free(buff);
+			free_argv(argv);
 			exit(EXIT_FAILURE);
 		}
 		wait(&wstatus);
+		free_argv(argv);
 		if (!isatty(STDIN_FILENO))
 			return (0);
 		free(buff);
