@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * get_argv - take a space-separated string and converts it to arguments vector
  * @str: string
@@ -7,13 +8,14 @@
  *
  * Return: argv (pointer to pointer to char)
  */
-char **get_argv(char *str, ssize_t count)
+struct args_info *get_argv(char *str, ssize_t count)
 {
 	char *buff_cpy;
 	size_t len;
 	char *token;
 	int ac, i;
 	char **av;
+	static struct args_info args;
 
 	ac = 0;
 	buff_cpy = malloc(sizeof(*buff_cpy) * (count));
@@ -38,5 +40,7 @@ char **get_argv(char *str, ssize_t count)
 	}
 	free(buff_cpy);
 
-	return (av);
+	args.argc = ac;
+	args.argv = av;
+	return (&args);
 }

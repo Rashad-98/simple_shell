@@ -10,40 +10,40 @@
  */
 int main(__attribute__((unused)) int ac, char **av, char **env)
 {
-	char *buff;
+	char *buff, **argv;
 	size_t n;
 	ssize_t count;
 	pid_t pid;
 	int wstatus;
-	char **argv;
+	struct args_info *args;
 
 	while (1)
 	{
 		buff = NULL;
 		n = 0;
 		if (isatty(STDIN_FILENO))
-		{
 			printf("$ ");
-		}
 		count = getline(&buff, &n, stdin);
-		if (*buff == '\0')
-		{
-			putchar('\n');
-			return (0);
-		}
+		buff = check_command(buff);
+		if (buff == NULL)
+			continue;
+		handle_EOF(buff);
 		buff[count - 1] = '\0';
-		argv = get_argv(buff, count);
-		pid = fork();
-		if (pid == 0)
+		args = get_argv(buff, count);
+		argv = args->argv;
+		argv[0] = handle_path(argv);
+		if (argv[0] == NULL)
 		{
-			execve((const char *)argv[0], (char *const *)argv, (char *const *)env);
+			errno = 2;
 			perror(av[0]);
-			free(buff);
-			free_argv(argv);
-			exit(EXIT_FAILURE);
 		}
-		wait(&wstatus);
-		free_argv(argv);
+		else
+		{
+			pid = fork();
+			ch_x(args, av, env, buff, pid);
+			wait(&wstatus);
+		}
+		free_argv(args->argc, argv);
 		if (!isatty(STDIN_FILENO))
 			return (0);
 		free(buff);
