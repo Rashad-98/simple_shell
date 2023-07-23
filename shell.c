@@ -31,6 +31,12 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
 		buff[count - 1] = '\0';
 		args = get_argv(buff, count);
 		argv = args->argv;
+		if (handle_builtins(argv) == 0)
+		{
+			free_argv(args->argc, argv);
+			free(buff);
+			continue;
+		}
 		argv[0] = handle_path(argv);
 		if (argv[0] == NULL)
 		{
