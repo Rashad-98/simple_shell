@@ -10,7 +10,7 @@ int handle_builtins(shell_info *s_info)
 {
 	int i;
 	command commands[] = {
-		{"exit", handle_exit},
+		{"exittttttttttttttt", handle_exit},
 		{NULL, NULL}
 	};
 	char **argv = s_info->command->argv;
