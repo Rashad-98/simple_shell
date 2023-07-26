@@ -48,6 +48,8 @@ typedef struct command
 	char *name;
 	void (*handler)(shell_info *);
 } command;
+void prompt(void);
+void handle_non_i(void);
 size_t _strlen(const char *str);
 char *_strcpy(char *dest, const char *src);
 command_info *get_argv(char *str, ssize_t count);

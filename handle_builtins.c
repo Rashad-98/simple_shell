@@ -20,6 +20,7 @@ int handle_builtins(shell_info *s_info)
 		if (is_equal(argv[0], commands[i].name))
 		{
 			commands[i].handler(s_info);
+			free_argv(s_info->argc, s_info->argv);
 			return (0);
 		}
 	}

@@ -39,7 +39,7 @@ command_info *get_argv(char *str, ssize_t count)
 		i++;
 	}
 	free(buff_cpy);
-
+	free(str);
 	c_info.argc = ac;
 	c_info.argv = av;
 	return (&c_info);
