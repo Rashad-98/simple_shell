@@ -63,4 +63,6 @@ int is_equal(char *str1, char *str2);
 void handle_exit(shell_info *);
 int is_num(char *);
 unsigned long int str_to_int(char *);
+char *int_to_str(int num);
+void _perror(shell_info *, char *msg);
 #endif

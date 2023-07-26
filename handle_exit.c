@@ -25,6 +25,6 @@ void handle_exit(shell_info *s_info)
 	}
 	else
 	{
-		write(2, "Error\n", 6);
+		_perror(s_info, "Illegal number");
 	}
 }
