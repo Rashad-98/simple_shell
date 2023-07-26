@@ -27,6 +27,7 @@ typedef struct command_info
  * in the current process
  * @argc: arguments count
  * @argv: arguments vector
+ * @env: environment vector
  * @command: pointer to struct command_info
  */
 typedef struct shell_info
@@ -36,17 +37,6 @@ typedef struct shell_info
 	char **env;
 	command_info *command;
 } shell_info;
-
-/**
- * struct args_info - structure that holds arguments and their count
- * @argc: arguments count
- * @argv: arguments vector
- */
-struct args_info
-{
-	int argc;
-	char **argv;
-};
 
 /**
  * struct command - structure that holds builtin command name and handler
