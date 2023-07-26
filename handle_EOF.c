@@ -8,7 +8,7 @@ void handle_EOF(char *buff)
 {
 	if (*buff == '\0')
 	{
-		putchar('\n');
+		write(1, "\n", 1);
 		free(buff);
 		exit(0);
 	}

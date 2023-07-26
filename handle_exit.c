@@ -25,6 +25,6 @@ void handle_exit(shell_info *s_info)
 	}
 	else
 	{
-		printf("Error\n");
+		write(2, "Error\n", 6);
 	}
 }
