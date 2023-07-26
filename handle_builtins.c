@@ -2,23 +2,24 @@
 
 /**
  * handle_builtins - handles built-in commands
- * @argv: argument vector
+ * @s_info: structure holding infromation aboud current shell process
  *
  * Return: 0 if builtin is handled, 1 if command is not a builtin
  */
-int handle_builtins(char **argv)
+int handle_builtins(shell_info *s_info)
 {
 	int i;
 	command commands[] = {
 		{"exit", handle_exit},
 		{NULL, NULL}
 	};
+	char **argv = s_info->command->argv;
 
 	for (i = 0; commands[i].name != NULL; i++)
 	{
 		if (is_equal(argv[0], commands[i].name))
 		{
-			commands[i].handler(argv);
+			commands[i].handler(s_info);
 			return (0);
 		}
 	}

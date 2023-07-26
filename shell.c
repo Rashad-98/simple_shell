@@ -15,7 +15,11 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
 	ssize_t count;
 	pid_t pid;
 	int wstatus;
-	struct args_info *args;
+	shell_info s_info;
+
+	s_info.argc = ac;
+	s_info.argv = av;
+	s_info.env = env;
 
 	while (1)
 	{
@@ -29,12 +33,12 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
 			continue;
 		handle_EOF(buff);
 		buff[count - 1] = '\0';
-		args = get_argv(buff, count);
-		argv = args->argv;
-		if (handle_builtins(argv) == 0)
+		s_info.command = get_argv(buff, count);
+		free(buff);
+		argv = s_info.command->argv;
+		if (handle_builtins(&s_info) == 0)
 		{
-			free_argv(args->argc, argv);
-			free(buff);
+			free_argv(s_info.command->argc, argv);
 			continue;
 		}
 		argv[0] = handle_path(argv);
@@ -46,13 +50,12 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
 		else
 		{
 			pid = fork();
-			ch_x(args, av, env, buff, pid);
+			ch_x(&s_info, pid);
 			wait(&wstatus);
 		}
-		free_argv(args->argc, argv);
+		free_argv(s_info.command->argc, argv);
 		if (!isatty(STDIN_FILENO))
 			return (0);
-		free(buff);
 	}
 	return (0);
 }

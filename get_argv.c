@@ -8,7 +8,7 @@
  *
  * Return: argv (pointer to pointer to char)
  */
-struct args_info *get_argv(char *str, ssize_t count)
+command_info *get_argv(char *str, ssize_t count)
 {
 	char *buff_cpy;
 	size_t len;
@@ -16,6 +16,7 @@ struct args_info *get_argv(char *str, ssize_t count)
 	int ac, i;
 	char **av;
 	static struct args_info args;
+	static command_info c_info;
 
 	ac = 0;
 	buff_cpy = malloc(sizeof(*buff_cpy) * (count));
@@ -42,5 +43,7 @@ struct args_info *get_argv(char *str, ssize_t count)
 
 	args.argc = ac;
 	args.argv = av;
-	return (&args);
+	c_info.argc = ac;
+	c_info.argv = av;
+	return (&c_info);
 }

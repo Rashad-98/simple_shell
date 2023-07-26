@@ -1,23 +1,22 @@
 #include "main.h"
 /**
  * ch_x - if inside a child process, executes a command
- * @args: structure holding arguments information
- * @av: arguments to main (entry point)
- * @env: environment
- * @buff: a buffer to free on error
+ * @s_info: structure hoding information aboud the current shell process
  * @pid: process id -> to check if inside a child
  */
-void ch_x(struct args_info *args, char **av, char **env, char *buff, pid_t pid)
+void ch_x(shell_info *s_info, pid_t pid)
 {
-	char **argv;
+	char **argv, **env;
+	int argc;
 
-	argv = args->argv;
+	argv = s_info->command->argv;
+	argc = s_info->command->argc;
+	env = s_info->env;
 	if (pid == 0)
 	{
 		execve((const char *)argv[0], (char *const *)argv, (char *const *)env);
-		perror(av[0]);
-		free(buff);
-		free_argv(args->argc, args->argv);
+		perror(s_info->argv[0]);
+		free_argv(argc, argv);
 		exit(EXIT_FAILURE);
 	}
 }
