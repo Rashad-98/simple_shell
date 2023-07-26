@@ -66,4 +66,5 @@ unsigned long int str_to_int(char *);
 char *int_to_str(int num);
 void _perror(shell_info *, char *msg);
 char *_getenv(const char *, char **);
+void handle_env(shell_info *);
 #endif
