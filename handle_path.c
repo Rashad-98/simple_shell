@@ -2,22 +2,23 @@
 
 /**
  * handle_path - finds if a file exists in any of PATH directories
- * @argv: arguments vector
+ * @s_info: structure holding shell information
  *
  * Return: full path of file if found, NULL if not found or if an error occured
  */
-char *handle_path(char **argv)
+char *handle_path(shell_info *s_info)
 {
 	char *dir, *path, *full_path, *path_cpy;
 	int arg_len, dir_len;
 	struct stat statbuff;
+	char **argv = s_info->command->argv;
 
 	if ((argv != NULL) && (argv[0] != NULL))
 	{
 		if (!(*argv[0] == '/' || *argv[0] == '.'))
 		{
 			arg_len = _strlen(*argv);
-			path = getenv("PATH");
+			path = _getenv("PATH", s_info->env);
 			path_cpy = malloc(sizeof(*path_cpy) * (_strlen(path) + 1));
 			_strcpy(path_cpy, path);
 			dir = strtok(path_cpy, ":");
@@ -46,6 +47,5 @@ char *handle_path(char **argv)
 		else
 			return (argv[0]);
 	}
-	else
 		return (NULL);
 }

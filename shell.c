@@ -34,7 +34,7 @@ int main(int ac, char **av, char **env)
 		s_info.command = get_argv(buff, count);
 		if (handle_builtins(&s_info) == 0)
 			continue;
-		s_info.command->argv[0] = handle_path(s_info.command->argv);
+		s_info.command->argv[0] = handle_path(&s_info);
 		if (s_info.command->argv[0] == NULL)
 		{
 			errno = 2;
