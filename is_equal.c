@@ -11,6 +11,9 @@ int is_equal(char *str1, char *str2)
 {
 	unsigned long int i, len1, len2;
 
+	len1 = 0;
+	len2 = 0;
+
 	len1 = _strlen(str1);
 	len2 = _strlen(str2);
 	if (len1 != len2)

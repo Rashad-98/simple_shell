@@ -11,7 +11,8 @@ int handle_builtins(shell_info *s_info)
 	int i;
 	command commands[] = {
 		{"exit", handle_exit},
-		{"env", handle_env}
+		{"env", handle_env},
+		{NULL, NULL}
 	};
 	char **argv = s_info->command->argv;
 
