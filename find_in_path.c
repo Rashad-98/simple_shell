@@ -15,7 +15,8 @@ char *find_in_path(shell_info *s_info)
 
 	arg_len = _strlen(*argv);
 	path = _getenv("PATH", s_info->env);
-	if (*path == '\0')
+	path = NULL;
+	if (path == NULL || *path == '\0')
 		return (NULL);
 	path_cpy = malloc(sizeof(*path_cpy) * (_strlen(path) + 1));
 	_strcpy(path_cpy, path);
