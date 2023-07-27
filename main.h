@@ -28,6 +28,7 @@ typedef struct command_info
  * @argc: arguments count
  * @argv: arguments vector
  * @env: environment vector
+ * @status: holds the exit status
  * @command: pointer to struct command_info
  */
 typedef struct shell_info
@@ -36,6 +37,7 @@ typedef struct shell_info
 	char **argv;
 	char **env;
 	command_info *command;
+	int status;
 } shell_info;
 
 /**
@@ -58,7 +60,7 @@ char *handle_path(shell_info *);
 char *check_command(char *cmd);
 void ch_x(shell_info *, pid_t);
 int handle_builtins(shell_info *);
-void handle_EOF(ssize_t, char *);
+void handle_EOF(ssize_t, char *, int);
 int is_equal(char *str1, char *str2);
 void handle_exit(shell_info *);
 int is_num(char *);
@@ -67,4 +69,5 @@ char *int_to_str(int num);
 void _perror(shell_info *, char *msg);
 char *_getenv(const char *, char **);
 void handle_env(shell_info *);
+void handle_fork(shell_info *);
 #endif

@@ -13,20 +13,19 @@ int main(int ac, char **av, char **env)
 	char *buff;
 	size_t n;
 	ssize_t count;
-	pid_t pid;
-	int wstatus;
 	shell_info s_info;
 
 	s_info.argc = ac;
 	s_info.argv = av;
 	s_info.env = env;
+	s_info.status = 0;
 	while (1)
 	{
 		buff = NULL;
 		n = 0;
 		prompt();
 		count = getline(&buff, &n, stdin);
-		handle_EOF(count, buff);
+		handle_EOF(count, buff, s_info.status);
 		buff = check_command(buff);
 		if (buff == NULL)
 			continue;
@@ -42,11 +41,9 @@ int main(int ac, char **av, char **env)
 		}
 		else
 		{
-			pid = fork();
-			ch_x(&s_info, pid);
-			wait(&wstatus);
+			handle_fork(&s_info);
 		}
 		free_argv(s_info.command->argc, s_info.command->argv);
 	}
-	return (0);
+	return (s_info.status);
 }

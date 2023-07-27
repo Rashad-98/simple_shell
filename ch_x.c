@@ -17,7 +17,7 @@ void ch_x(shell_info *s_info, pid_t pid)
 		execve((const char *)argv[0], (char *const *)argv, (char *const *)env);
 		perror(s_info->argv[0]);
 		free_argv(argc, argv);
-		exit(EXIT_FAILURE);
+		exit(errno);
 	}
 }
 
