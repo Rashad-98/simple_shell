@@ -14,6 +14,7 @@ int main(void)
 	char str5[] = "23423.242342";
 	char str6[] = "243hello";
 	char str7[] = "3";
+	char str8[] = "-2";
 
 	printf("it should be 0 and it is --> %d\n", is_num(str1));
 	printf("it should be 1 and it is --> %d\n", is_num(str2));
@@ -22,6 +23,7 @@ int main(void)
 	printf("it should be 0 and it is --> %d\n", is_num(str5));
 	printf("it should be 0 and it is --> %d\n", is_num(str6));
 	printf("it should be 1 and it is --> %d\n", is_num(str7));
+	printf("it should be 0 and it is --> %d\n", is_num(str8));
 
 	return (0);
 }
