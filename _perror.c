@@ -18,14 +18,14 @@ void _perror(shell_info *s_info, char *msg)
 	arg_len = _strlen(s_info->command->argv[1]);
 	msg_len = _strlen(msg);
 
-	buff = malloc(sizeof(*buff) * (prog_len + cmd_len + arg_len + msg_len + 10));
+	buff = malloc(sizeof(*buff) * (prog_len + cmd_len + arg_len + msg_len + 100));
 	_strcpy(buff, s_info->argv[0]);
 	_strcpy(buff + prog_len, ": ");
 	cursor = prog_len + 2;
 	count_str = int_to_str(count);
 	_strcpy(buff + cursor, count_str);
+	cursor += _strlen(count_str);
 	free(count_str);
-	cursor += _strlen(count_str) + 1;
 	_strcpy(buff + cursor, ": ");
 	cursor += 2;
 	_strcpy(buff + cursor, s_info->command->argv[0]);

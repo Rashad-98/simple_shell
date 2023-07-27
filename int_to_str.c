@@ -30,6 +30,5 @@ char *int_to_str(int num)
 		num /= 10;
 	}
 	str[len] = '\0';
-
 	return (str);
 }
