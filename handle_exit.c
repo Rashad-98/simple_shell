@@ -21,7 +21,7 @@ void handle_exit(shell_info *s_info)
 	else if (argv[1] == NULL)
 	{
 		free_argv(argc, argv);
-		exit(EXIT_SUCCESS);
+		exit(s_info->status);
 	}
 	else
 	{

@@ -15,9 +15,10 @@ void ch_x(shell_info *s_info, pid_t pid)
 	if (pid == 0)
 	{
 		execve((const char *)argv[0], (char *const *)argv, (char *const *)env);
-		errno = 127;
+		errno = 2;
 		perror(s_info->argv[0]);
 		free_argv(argc, argv);
+		s_info->status = errno;
 		exit(errno);
 	}
 }
