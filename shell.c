@@ -36,7 +36,8 @@ int main(int ac, char **av, char **env)
 		s_info.command->argv[0] = handle_path(&s_info);
 		if (s_info.command->argv[0] == NULL)
 		{
-			errno = 2;
+			errno = 127;
+			s_info.status = 127;
 			perror(av[0]);
 		}
 		else
