@@ -2,12 +2,18 @@
 
 /**
  * handle_EOF - handles ctrl+D input
+ * @count: count of characters read
  * @buff: buffer containing input
  */
-void handle_EOF(char *buff)
+void handle_EOF(ssize_t count, char *buff)
 {
-	if (*buff == '\0')
+	if (count == -1)
 	{
+		if (!isatty(STDIN_FILENO))
+		{
+			free(buff);
+			exit(0);
+		}
 		write(1, "\n", 1);
 		free(buff);
 		exit(0);

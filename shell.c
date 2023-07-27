@@ -26,10 +26,10 @@ int main(int ac, char **av, char **env)
 		n = 0;
 		prompt();
 		count = getline(&buff, &n, stdin);
+		handle_EOF(count, buff);
 		buff = check_command(buff);
 		if (buff == NULL)
 			continue;
-		handle_EOF(buff);
 		buff[count - 1] = '\0';
 		s_info.command = get_argv(buff, count);
 		if (handle_builtins(&s_info) == 0)
@@ -47,7 +47,6 @@ int main(int ac, char **av, char **env)
 			wait(&wstatus);
 		}
 		free_argv(s_info.command->argc, s_info.command->argv);
-		handle_non_i();
 	}
 	return (0);
 }

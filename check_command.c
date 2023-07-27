@@ -10,6 +10,8 @@ char *check_command(char *cmd)
 {
 	int i;
 
+	if (cmd == NULL || *cmd == '\0')
+		return (cmd);
 	if (*cmd == '\n')
 	{
 		free(cmd);
