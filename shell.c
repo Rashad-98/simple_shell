@@ -10,7 +10,7 @@
  */
 int main(int ac, char **av, char **env)
 {
-	char *buff;
+	char *buff, *cmd;
 	size_t n;
 	ssize_t count;
 	shell_info s_info;
@@ -31,17 +31,20 @@ int main(int ac, char **av, char **env)
 			continue;
 		buff[count - 1] = '\0';
 		s_info.command = get_argv(buff, count);
+		free(buff);
 		if (handle_builtins(&s_info) == 0)
 			continue;
-		s_info.command->argv[0] = handle_path(&s_info);
-		if (s_info.command->argv[0] == NULL)
+		cmd = handle_path(&s_info);
+		if (cmd == NULL)
 		{
-			errno = 127;
 			s_info.status = 127;
-			perror(av[0]);
+			_perror(&s_info, "not found");
 		}
 		else
 		{
+			if (s_info.command->argv[0] != cmd)
+				free(s_info.command->argv[0]);
+			s_info.command->argv[0] = cmd;
 			handle_fork(&s_info);
 		}
 		free_argv(s_info.command->argc, s_info.command->argv);

@@ -70,4 +70,5 @@ void _perror(shell_info *, char *msg);
 char *_getenv(const char *, char **);
 void handle_env(shell_info *);
 void handle_fork(shell_info *);
+char *find_in_path(shell_info *);
 #endif
